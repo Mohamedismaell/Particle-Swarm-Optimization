@@ -7,10 +7,10 @@ This project implements a **Particle Swarm Optimization (PSO)** algorithm to sol
 - **Member 1**: Data Loading & Configuration (`data.py`, `config.py`)
 - **Member 2**: Core PSO Optimizer (`optimizer.py`)
 - **Member 3**: Objective Function (`objective.py`)
-- **Member 4**: Reporting & Console Output (`reporting.py`)
-- **Member 5**: Core Logic & Utils (`utils.py`, `assignment.py` - device allocation)
-- **Member 6**: Business Logic & Costs (`assignment.py` - cost calc, smart assignment)
-- **Member 7**: GUI & Main Application (`gui_app.py`, `main.py`)
+- **Member 4**: Core Logic & Utils (`utils.py`, `assignment.py` - device allocation - cost calc)
+- **Member 5**: Business Logic & Costs & Reporting & Console Output (`reporting.py`,`assignment.py`, smart assignment)
+- **Member 6**: GUI & Main Application (`gui_app.py`- init , `main.py`)
+- **Member 7**: GUI & Main Application (`gui_app.py`- run , plot)
 
 ## 🚀 How to Run
 
