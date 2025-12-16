@@ -2,8 +2,6 @@ import pandas as pd
 import random
 from .config import FILE_NAME
 
-#! member 1
-
 
 def load_data():
     print("Loading data...")
@@ -16,7 +14,6 @@ def load_data():
         print(f"Error loading main sheets: {e}")
         return [], [], []
 
-    #! reading  or Generate candidate points in null "Case"
     try:
         points = pd.read_excel(
             FILE_NAME, sheet_name='CandidatePoints').to_dict('records')

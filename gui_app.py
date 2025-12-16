@@ -7,8 +7,7 @@ import random
 from pso_lib.data import load_data
 from pso_lib.optimizer import execute_pso
 from pso_lib.assignment import smart_assignment
-
-#! member 6
+from pso_lib.objective import objective_function
 
 
 class PSOApp:
@@ -39,8 +38,6 @@ class PSOApp:
         self.fig, self.ax = plt.subplots(figsize=(7, 5))
         self.canvas = FigureCanvasTkAgg(self.fig, master=root)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
-
-    #! member 7
 
     def run_pso(self):
         try:
@@ -81,7 +78,7 @@ class PSOApp:
         cost, latency, _, assignments = smart_assignment(
             active_map, cloudlets, devices, points
         )
-
+        fitness = objective_function(Gbest, cloudlets, devices, points)
         self.ax.scatter(
             [p['x'] for p in points],
             [p['y'] for p in points],
@@ -106,7 +103,8 @@ class PSOApp:
             self.ax.plot([d['x'], p['x']], [d['y'], p['y']],
                          linestyle='--', alpha=0.3)
 
-        self.ax.set_title(f"Cost: {cost:.1f} | Latency: {latency:.1f}")
+        self.ax.set_title(
+            f"Cost: {cost:.1f} | Latency: {latency:.1f}| fitness: {fitness:.1f}")
         self.ax.legend()
         self.ax.grid(True)
         self.canvas.draw()

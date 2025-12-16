@@ -1,21 +1,17 @@
 import numpy as np
 from .objective import objective_function
 
-#! member 2 ===> Ismael
 
-
-def execute_pso(devices, cloudlets, points, num_particles=30, iterations=100, inertia_weight=0.5, c1=1.5, social_coeff=1.5):
+def execute_pso(devices, cloudlets, points, num_particles=30, iterations=100, weight=0.5, c1=1.5, c2=1.5):
     if not devices or not cloudlets:
         return None, None
 
     num_cloudlets = len(cloudlets)
     num_points = len(points)
 
-    #! more index for  (OFF state & flexibility)
     dim = num_cloudlets
     upper_bound = num_points + 2
 
-    # * Initialize
     positions = np.random.uniform(0, upper_bound, (num_particles, dim))
     velocities = np.zeros((num_particles, dim))
 
@@ -29,31 +25,28 @@ def execute_pso(devices, cloudlets, points, num_particles=30, iterations=100, in
 
     for t in range(iterations):
         for i in range(num_particles):
-            #! Fitness
             fitness = objective_function(
                 positions[i], cloudlets, devices, points)
 
-            #! Update Personal Best
             if fitness < personal_best_scores[i]:
                 personal_best_scores[i] = fitness
                 personal_best_positions[i] = positions[i].copy()
 
-            #! Update Global Best
             if fitness < global_best_score:
                 global_best_score = fitness
                 global_best_position = positions[i].copy()
 
-        cognitive_random, social_random = np.random.rand(
+        r1, r2 = np.random.rand(
             dim), np.random.rand(dim)
-        velocities = inertia_weight * velocities + c1 * cognitive_random * (personal_best_positions - positions) + \
-            social_coeff * social_random * (global_best_position - positions)
+
+        velocities = weight * velocities + c1 * r1 * (personal_best_positions - positions) + \
+            c2 * r2 * (global_best_position - positions)
+
         positions = positions + velocities
         positions = np.clip(positions, 0, upper_bound)
 
         if t % 10 == 0:
 
-            #! progress every 10 iterations
             print(
                 f"Iter {t}: Best Fitness = {global_best_score:.2f}", flush=True)
-
     return global_best_position, global_best_score

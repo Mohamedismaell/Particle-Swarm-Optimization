@@ -4,21 +4,15 @@ from pso_lib.data import load_data
 from pso_lib.optimizer import execute_pso
 from pso_lib.reporting import print_results
 
-#! member 6
-
 
 def main():
     try:
-        #! Initialize
         init_seeds()
 
-        #! Load Data
         devices, cloudlets, points = load_data()
 
-        #! Run Optimization
         Gbest, _ = execute_pso(devices, cloudlets, points)
 
-        #! Display Results
         print_results(Gbest, devices, cloudlets, points)
 
     except KeyboardInterrupt:
